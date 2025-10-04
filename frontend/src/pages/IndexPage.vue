@@ -12,6 +12,8 @@ const { getScrollTarget, setVerticalScrollPosition } = scroll;
 
 import { useStore } from "stores/store";
 
+const store = useStore();
+
 import SectionOne from "components/SectionOne.vue";
 import SectionTwo from "components/SectionTwo.vue";
 import SectionThree from "components/SectionThree.vue";
@@ -27,10 +29,6 @@ export default {
       const duration = 1000;
       setVerticalScrollPosition(target, offset, duration);
     },
-  },
-  mounted() {
-    // const store = useStore();
-    // store.getPortfolio();
   },
 };
 </script>

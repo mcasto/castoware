@@ -36,15 +36,15 @@
       </div>
       <div class="text-body1 text-center">
         View our
-        <a @click="showPortfolio = true" style="color: blue; cursor: pointer;">
-          portfolio
-        </a>
+        <router-link :to="{ name: 'portfolio' }" class="text-accent"
+          >portfolio</router-link
+        >
         to see some of our recent work
       </div>
       <div class="text-body1 text-center q-mt-sm">
-        <a @click="showAbout = true" style="color: blue; cursor: pointer;">
-          About
-        </a>
+        <router-link :to="{ name: 'about' }" class="text-accent"
+          >About</router-link
+        >
         Our Team
       </div>
       <div class="text-body1 text-center q-mt-md">
@@ -56,27 +56,9 @@
         </q-btn>
       </div>
     </div>
-
-    <q-dialog v-model="showPortfolio">
-      <portfolio-dialog @close="showPortfolio = false"></portfolio-dialog>
-    </q-dialog>
-
-    <q-dialog v-model="showAbout">
-      <about-dialog @close="showAbout = false"></about-dialog>
-    </q-dialog>
   </div>
 </template>
 
-<script>
-import AboutDialog from "components/AboutDialog.vue";
-import PortfolioDialog from "components/PortfolioDialog.vue";
-
-export default {
-  name: "SectionOne",
-  components: { AboutDialog, PortfolioDialog },
-  data: () => ({
-    showAbout: false,
-    showPortfolio: false,
-  }),
-};
+<script setup>
+//
 </script>

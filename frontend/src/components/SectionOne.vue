@@ -44,8 +44,6 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "SectionOne",
-};
+<script setup>
+//
 </script>
