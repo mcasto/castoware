@@ -10,13 +10,9 @@ Route::controller(AuthController::class)
     ->group(function () {
         Route::post('/login', 'login');
         Route::get('/validate-token', 'validateToken');
+        Route::get('/logout', 'logout')
+            ->middleware('auth:sanctum');
     });
-
-Route::controller(PortfolioController::class)
-    ->group(function () {
-        Route::get('/portfolio', 'index');
-    });
-
 
 Route::controller(ContactController::class)
     ->group(function () {
@@ -25,4 +21,10 @@ Route::controller(ContactController::class)
             ->middleware('auth:sanctum');
         Route::delete('/contacts/{id}', 'destroy')
             ->middleware('auth:sanctum');
+    });
+
+
+Route::controller(PortfolioController::class)
+    ->group(function () {
+        Route::get('/portfolio', 'index');
     });

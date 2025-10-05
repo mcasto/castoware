@@ -28,12 +28,29 @@
 </template>
 
 <script setup>
+import { Notify } from "quasar";
+import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 
 const store = useStore();
 
-const logout = () => {
-  store.token = null;
-  store.router.push({ name: "login" });
+const logout = async () => {
+  const response = await callApi({
+    path: "/logout",
+    method: "get",
+    useAuth: true,
+  });
+
+  if (response.status == "success") {
+    store.token = null;
+    store.router.push({ name: "login" });
+    return;
+  }
+
+  Notify.create({
+    type: "negative",
+    position: "center",
+    message: "Unable to logout.",
+  });
 };
 </script>
