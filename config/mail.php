@@ -96,6 +96,9 @@ return [
             ],
             'retry_after' => 60,
         ],
+        'mailersend' => [
+            'transport' => 'mailersend',
+        ],
 
     ],
 
@@ -115,4 +118,8 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'to' => [
+        'mike' => env('MAIL_TO_MIKE'),
+        'margaret' => env('MAIL_TO_MARGARET')
+    ],
 ];

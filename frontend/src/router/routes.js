@@ -3,12 +3,66 @@ import { useStore } from "src/stores/store";
 
 const routes = [
   {
+    path: "/login",
+    component: () => import("pages/AdminLogin.vue"),
+    name: "login",
+  },
+
+  {
+    path: "/admin",
+    component: () => import("layouts/AdminLayout.vue"),
+    beforeEnter: async (to, from, next) => {
+      const store = useStore();
+
+      let validUser = !!store.token;
+
+      if (store.token) {
+        const response = await callApi({
+          path: "/validate-token",
+          method: "get",
+        });
+        if (response.status == "success") {
+          validUser = true;
+        }
+      }
+
+      if (!validUser) {
+        next("/login");
+        return;
+      }
+
+      next();
+    },
+    children: [
+      {
+        path: "contacts",
+        component: () => import("pages/AdminContacts.vue"),
+        name: "admin-contacts",
+        beforeEnter: async () => {
+          const store = useStore();
+          store.admin.contacts = await callApi({
+            path: "/contacts",
+            method: "get",
+            useAuth: true,
+          });
+        },
+      },
+      {
+        path: "portfolio",
+        component: () => import("pages/AdminPortfolio.vue"),
+        name: "admin-portfolio",
+      },
+    ],
+  },
+
+  {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
       {
         path: "",
         component: () => import("pages/IndexPage.vue"),
+        name: "home",
       },
       {
         path: "portfolio",

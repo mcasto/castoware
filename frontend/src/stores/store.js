@@ -5,7 +5,12 @@ export const useStore = defineStore(
   "store",
   () => {
     const state = {
+      admin: ref({
+        contacts: null,
+        portfolio: null,
+      }),
       portfolio: ref(null),
+      token: ref(null),
     };
     const getters = {};
     const actions = {};
