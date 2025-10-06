@@ -104,6 +104,10 @@ const routes = [
       {
         path: "about-us",
         component: () => import("pages/AboutPage.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          store.aboutUs = await callApi({ path: "/about-us", method: "get" });
+        },
         name: "about",
       },
     ],
