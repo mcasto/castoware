@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +28,13 @@ Route::controller(ContactController::class)
 Route::controller(PortfolioController::class)
     ->group(function () {
         Route::get('/portfolio', 'index');
+        Route::post('/portfolio', 'store')
+            ->middleware('auth:sanctum');
+        Route::put('/portfolio/{id}', 'update')
+            ->middleware('auth:sanctum');
+        Route::delete('/portfolio/{id}', 'destroy')
+            ->middleware('auth:sanctum');
     });
+
+Route::post('/handle-upload', [UploadController::class, 'store'])
+    ->middleware('auth:sanctum');

@@ -74,6 +74,11 @@ export default defineConfig((/* ctx */) => {
           target: "http://castoware.test",
           changeOrigin: true,
         },
+        "/storage": {
+          // Add this new proxy rule
+          target: "http://castoware.test",
+          changeOrigin: true,
+        },
       },
     },
 

@@ -3,12 +3,26 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Portfolio extends Model
 {
     protected $fillable = [
         'site_name',
         'image',
-        'url'
+        'url',
+        'sort_order'
     ];
+
+    protected static function booted()
+    {
+        static::deleting(function ($model) {
+            // Delete the associated file from storage
+            if ($model->image) {
+                // Remove the '/storage/' prefix to get the actual path in storage
+                $filePath = str_replace('/storage/', '', $model->image);
+                Storage::disk('public')->delete($filePath);
+            }
+        });
+    }
 }

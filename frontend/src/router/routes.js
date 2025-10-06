@@ -11,6 +11,7 @@ const routes = [
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
+    name: "admin",
     beforeEnter: async (to, from, next) => {
       const store = useStore();
 
@@ -36,6 +37,7 @@ const routes = [
     children: [
       {
         path: "contacts",
+        alias: "",
         component: () => import("pages/AdminContacts.vue"),
         name: "admin-contacts",
         beforeEnter: async () => {
@@ -50,7 +52,30 @@ const routes = [
       {
         path: "portfolio",
         component: () => import("pages/AdminPortfolio.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+
+          const response = await callApi({
+            path: "/portfolio",
+            method: "get",
+          });
+
+          store.admin.portfolio = response;
+        },
         name: "admin-portfolio",
+      },
+      {
+        path: "edit-portfolio/:id",
+        component: () => import("pages/EditPortfolio.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+
+          store.admin.portfolio = await callApi({
+            path: "/portfolio",
+            method: "get",
+          });
+        },
+        name: "edit-portfolio",
       },
     ],
   },
