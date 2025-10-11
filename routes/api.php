@@ -16,7 +16,8 @@ Route::controller(AboutController::class)
 Route::controller(AuthController::class)
     ->group(function () {
         Route::post('/login', 'login');
-        Route::get('/validate-token', 'validateToken');
+        Route::get('/validate-token', 'validateToken')
+            ->middleware('auth:sanctum');
         Route::get('/logout', 'logout')
             ->middleware('auth:sanctum');
     });

@@ -1,32 +1,14 @@
-{
-  "home": [
-    {
-      "label": "Portfolio",
-      "path": "/portfolio"
-    },
-    {
-      "label": "About Us",
-      "path": "/about-us"
-    }
-  ],
-  "portfolio": [
-    {
-      "label": "Home",
-      "path": "/"
-    },
-    {
-      "label": "About Us",
-      "path": "/about-us"
-    }
-  ],
-  "about": [
-    {
-      "label": "Home",
-      "path": "/"
-    },
-    {
-      "label": "Portfolio",
-      "path": "/about-us"
-    }
-  ]
-}
+[
+  {
+    "label": "Home",
+    "path": "/"
+  },
+  {
+    "label": "Portfolio",
+    "path": "/portfolio"
+  },
+  {
+    "label": "About Us",
+    "path": "/about-us"
+  }
+]
