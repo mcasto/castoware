@@ -12,7 +12,7 @@
   "portfolio": [
     {
       "label": "Home",
-      "path": "/portfolio"
+      "path": "/"
     },
     {
       "label": "About Us",
@@ -22,7 +22,7 @@
   "about": [
     {
       "label": "Home",
-      "path": "/portfolio"
+      "path": "/"
     },
     {
       "label": "Portfolio",

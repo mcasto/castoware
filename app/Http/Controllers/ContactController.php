@@ -27,16 +27,13 @@ class ContactController extends Controller
         $contact = Contact::create($validator->valid());
 
         // send email about contact
-        Mail::to(config('mail.to.mike'))
-            ->send(new ContactMailer($contact));
+        if (config('app.env') == 'production') {
+            Mail::to(config('mail.to.mike'))
+                ->send(new ContactMailer($contact));
 
-        /**
-         * Line 31 threw:
-         * List should have at least 1 elements, but has 0 elements. {"exception":"[object] (MailerSend\\Exceptions\\MailerSendAssertException(code: 0): List should have at least 1 elements, but has 0 elements. at /home/u466389499/domains/castoware.com/public_html/preview/vendor/mailersend/mailersend/src/Helpers/GeneralHelpers.php:22)
-         */
-
-        Mail::to(config('mail.to.margaret'))
-            ->send(new ContactMailer($contact));
+            Mail::to(config('mail.to.margaret'))
+                ->send(new ContactMailer($contact));
+        }
 
 
         return ['status' => 'success'];

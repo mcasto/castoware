@@ -1,24 +1,26 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Portfolio from './pages/Portfolio';
+import About from './pages/About';
 import ToolbarComponent from './components/ToolbarComponent';
-import HeaderComponent from './components/HeaderComponent';
-import HeaderImage from './components/HeaderImage';
+import Admin from './pages/Admin';
 
-const App = () => {
-  return (
-    <div className="min-h-screen">
-        <ToolbarComponent page='home' />
-        <div className="max-w-6xl mx-auto">
-            <div className="flex flex-col md:flex-row gap-4">
-            <div className="w-full md:w-1/2">
-                <HeaderComponent />
-            </div>
+function App() {
+    return (
+        <Router>
+            <div className="app">
+                {/* Toolbar shows on all pages */}
+                <ToolbarComponent /> {/* We'll fix this later */}
 
-            <div className="hidden md:block md:w-1/2">
-                <HeaderImage />
+                <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="/portfolio" element={<Portfolio />} />
+                    <Route path="/about-us" element={<About />} />
+                    <Route path="/admin" element={<Admin />} />
+                </Routes>
             </div>
-            </div>
-        </div>
-    </div>
-  );
-};
+        </Router>
+    );
+}
 
-export default App;
+export default App

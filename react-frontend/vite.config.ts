@@ -5,7 +5,14 @@ import tailwindcss from '@tailwindcss/vite'
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(),tailwindcss()],
-  server:{
-    port:52471
+  server: {
+    port:52471,
+    proxy: {
+      '/api': {
+        target: 'http://castoware.test',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   }
 })
