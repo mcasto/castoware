@@ -2,7 +2,7 @@
   <q-layout view="lHh Lpr lFf">
     <q-header>
       <q-toolbar class="justify-between">
-        <q-toolbar-title shrink>
+        <q-toolbar-title shrink v-if="Screen.gt.sm">
           Admin
         </q-toolbar-title>
 
@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { Notify } from "quasar";
+import { Notify, Screen } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 

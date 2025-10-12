@@ -5,7 +5,7 @@
         class="row items-center q-pa-md text-white"
         :class="`bg-${info.theme}`"
       >
-        <q-avatar size="80px" class="q-mr-md">
+        <q-avatar size="80px" class="q-mr-md" v-if="Screen.gt.sm">
           <q-icon :name="info.icon" size="40px" />
         </q-avatar>
         <div>
@@ -62,5 +62,7 @@
 </template>
 
 <script setup>
+import { Screen } from "quasar";
+
 const props = defineProps(["info"]);
 </script>

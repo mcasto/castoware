@@ -1,6 +1,5 @@
 <template>
   <div>
-    <nav-toolbar :buttons="{ about: true }" title="Portfolio"></nav-toolbar>
     <div class="row">
       <div
         class="col-12 col-md-6"
@@ -27,7 +26,6 @@
 
 <script setup>
 import { useStore } from "src/stores/store";
-import NavToolbar from "src/components/NavToolbar.vue";
 
 const store = useStore();
 

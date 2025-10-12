@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -11,8 +12,10 @@ class PortfolioController extends Controller
 {
     public function index()
     {
-        return Portfolio::orderBy('sort_order')
-            ->get();
+        return Cache::rememberForever('castoware-portfolio', function () {
+            return Portfolio::orderBy('sort_order')
+                ->get();
+        });
     }
 
     public function store(Request $request)
