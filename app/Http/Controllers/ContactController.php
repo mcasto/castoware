@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\ContactMailer;
 use App\Models\Contact;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Mail;
@@ -27,14 +28,17 @@ class ContactController extends Controller
         $contact = Contact::create($validator->valid());
 
         // send email about contact
-        if (config('app.env') == 'production') {
-            Mail::to(config('mail.to.mike'))
-                ->send(new ContactMailer($contact));
+        if (config('app.env') == 'local') {
+            try {
+                Mail::to(config('mail.to.mike'))
+                    ->send(new ContactMailer($contact));
 
-            Mail::to(config('mail.to.margaret'))
-                ->send(new ContactMailer($contact));
+                Mail::to(config('mail.to.margaret'))
+                    ->send(new ContactMailer($contact));
+            } catch (Exception $e) {
+                logger()->error($e);
+            }
         }
-
 
         return ['status' => 'success'];
     }
