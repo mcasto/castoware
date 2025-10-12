@@ -11,8 +11,8 @@ class AboutController extends Controller
     public function index()
     {
         return Cache::rememberForever('castoware-about', function () {
-            return Storage::disk('local')
-                ->get('about-us.json');
+            return ['status' => 'success', 'data' => json_decode(Storage::disk('local')
+                ->get('about-us.json'))];
         });
     }
 }

@@ -13,8 +13,8 @@ class PortfolioController extends Controller
     public function index()
     {
         return Cache::rememberForever('castoware-portfolio', function () {
-            return Portfolio::orderBy('sort_order')
-                ->get();
+            return ['status' => 'success', 'data' => Portfolio::orderBy('sort_order')
+                ->get()];
         });
     }
 
