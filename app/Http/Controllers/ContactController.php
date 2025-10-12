@@ -28,7 +28,7 @@ class ContactController extends Controller
         $contact = Contact::create($validator->valid());
 
         // send email about contact
-        if (config('app.env') == 'local') {
+        if (config('app.env') == 'production') {
             try {
                 Mail::to(config('mail.to.mike'))
                     ->send(new ContactMailer($contact));
