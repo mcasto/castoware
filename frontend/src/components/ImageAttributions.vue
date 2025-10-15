@@ -25,31 +25,25 @@
 </template>
 
 <script>
-  import uniqid from "uniqid";
+import { uid } from "quasar";
 
-  export default {
-    name: "ImageAttributions",
-    data: () => ({
-      attributions: [
-        {
-          _id: uniqid(),
-          name: "CastoWare Logo",
-          credit: "Image by David Davidson",
-          image: "/images/castoware-logo.png",
-        },
-        {
-          _id: uniqid(),
-          name: "Web Design",
-          credit: `Image by&nbsp;<a href="https://pixabay.com/users/kreatikar-8562930/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3411373">Mudassar Iqbal</a>&nbsp;from&nbsp;<a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3411373">Pixabay</a>`,
-          image: "/images/web-design.jpg",
-        },
-        {
-          _id: uniqid(),
-          name: "Office",
-          credit: `Image by&nbsp;<a href="https://pixabay.com/users/startupstockphotos-690514/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=594132">StartupStockPhotos</a>&nbsp;from&nbsp;<a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=594132">Pixabay</a>`,
-          image: "/images/office.jpg",
-        },
-      ],
-    }),
-  };
+export default {
+  name: "ImageAttributions",
+  data: () => ({
+    attributions: [
+      {
+        _id: uid(),
+        name: "Web Design",
+        credit: `Image by&nbsp;<a href="https://pixabay.com/users/kreatikar-8562930/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3411373">Mudassar Iqbal</a>&nbsp;from&nbsp;<a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=3411373">Pixabay</a>`,
+        image: "/images/web-design.jpg",
+      },
+      {
+        _id: uid(),
+        name: "Office",
+        credit: `Image by&nbsp;<a href="https://pixabay.com/users/startupstockphotos-690514/?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=594132">StartupStockPhotos</a>&nbsp;from&nbsp;<a href="https://pixabay.com//?utm_source=link-attribution&utm_medium=referral&utm_campaign=image&utm_content=594132">Pixabay</a>`,
+        image: "/images/office.jpg",
+      },
+    ],
+  }),
+};
 </script>
