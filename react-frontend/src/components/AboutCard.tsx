@@ -18,7 +18,7 @@ const AboutCard = ({ info }: AboutCardProps) => {
         <div className="w-full bg-white rounded-lg shadow-sm">
             <div className="p-0">
                 <div
-                    className={`flex items-center p-4 text-white ${getThemeColor('bg')}`}
+                    className={`flex items-center p-4 text-white ${getThemeColor('bg')}`} style={{ backgroundColor: info.theme }}
                 >
                     {isMediumOrLarger && (
                         <div className="w-20 h-20 mr-4 flex items-center justify-center rounded-full bg-white/20">
@@ -37,7 +37,7 @@ const AboutCard = ({ info }: AboutCardProps) => {
             <div className="pt-12 px-6">
                 <div className="flex flex-wrap -mx-4">
                     <div className="w-full md:w-6/12 px-4 mb-6">
-                        <div className={`text-xl font-semibold mb-4 ${getThemeColor('text')}`}>
+                        <div className={`text-xl font-semibold mb-4`} style={{ color: info.theme }}>
                             {info.expertise.label}
                         </div>
                         <div className="border rounded-lg divide-y">
@@ -51,7 +51,7 @@ const AboutCard = ({ info }: AboutCardProps) => {
                                         <Icon
                                             name={item.icon}
                                             size={24}
-                                            className={getThemeColor('text')}
+                                            style={{ color: info.theme }}
                                         />
                                     </div>
                                     <div className="flex-1">
@@ -65,7 +65,7 @@ const AboutCard = ({ info }: AboutCardProps) => {
 
                     {info.career && (
                         <div className="w-full md:w-6/12 px-4 mb-6">
-                            <div className={`text-xl font-semibold mb-4 ${getThemeColor('text')}`}>
+                            <div className={`text-xl font-semibold mb-4`} style={{ color: info.theme }}>
                                 {info.career.label}
                             </div>
 
