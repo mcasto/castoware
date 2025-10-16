@@ -8,15 +8,15 @@
     "path": "/admin"
   },
   {
-    "label": "Contacts",
+    "label": "Manage Contacts",
     "path": "/admin/contacts"
   },
   {
-    "label": "Portfolio",
+    "label": "Manage Portfolio",
     "path": "/admin/portfolio"
   },
   {
-    "label": "About Us",
+    "label": "Manage About Us",
     "path": "/admin/about-us"
   }
 ]

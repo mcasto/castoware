@@ -27,7 +27,11 @@ Route::controller(ContactController::class)
         Route::post('/contact', 'store');
         Route::get('/contacts', 'index')
             ->middleware('auth:sanctum');
+        Route::get('/contacts/count', 'count')
+            ->middleware('auth:sanctum');
         Route::delete('/contacts/{id}', 'destroy')
+            ->middleware('auth:sanctum');
+        Route::put('/update-last-viewed', 'updateLastViewed')
             ->middleware('auth:sanctum');
     });
 
@@ -35,6 +39,8 @@ Route::controller(ContactController::class)
 Route::controller(PortfolioController::class)
     ->group(function () {
         Route::get('/portfolio', 'index');
+        Route::get('/portfolio/count', 'count')
+            ->middleware('auth:sanctum');
         Route::post('/portfolio', 'store')
             ->middleware('auth:sanctum');
         Route::put('/portfolio/{id}', 'update')

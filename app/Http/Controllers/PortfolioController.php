@@ -18,6 +18,11 @@ class PortfolioController extends Controller
         });
     }
 
+    public function count()
+    {
+        return Portfolio::count();
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

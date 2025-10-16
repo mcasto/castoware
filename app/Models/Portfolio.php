@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class Portfolio extends Model
@@ -23,6 +24,14 @@ class Portfolio extends Model
                 $filePath = str_replace('/storage/', '', $model->image);
                 Storage::disk('public')->delete($filePath);
             }
+        });
+
+        static::saved(function () {
+            Cache::forget('castoware-portfolio');
+        });
+
+        static::deleted(function () {
+            Cache::forget('castoware-portfolio');
         });
     }
 }

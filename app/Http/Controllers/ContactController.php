@@ -46,15 +46,37 @@ class ContactController extends Controller
         $user = $request->user();
 
         return [
-            'contacts' => Contact::orderBy('created_at', 'desc')
-                ->get(),
-            'last_viewed' => $user->last_viewed_contacts
+            'status' => 'success',
+            'data' => [
+                'contacts' => Contact::orderBy('created_at', 'desc')
+                    ->get(),
+                'last_viewed' => $user->last_viewed_contacts
+            ]
         ];
+    }
+
+    public function count(Request $request)
+    {
+        $user = $request->user();
+        $lastViewed = $user->last_viewed_contacts;
+        $new = Contact::where('created_at', '>', $lastViewed)
+            ->count();
+        $total = Contact::count();
+        return ['new' => $new, 'total' => $total];
     }
 
     public function destroy(int $id)
     {
         $deleted = Contact::find($id)->delete();
         return ['status' => $deleted ? 'success' : 'error'];
+    }
+
+    public function updateLastViewed(Request $request)
+    {
+        $user = $request->user();
+        $user->last_viewed_contacts = now();
+        $user->save();
+
+        return ['status' => 'success'];
     }
 }
