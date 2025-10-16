@@ -1,4 +1,3 @@
-// stores/userStore.ts
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import api from '../assets/call-api'
@@ -71,7 +70,7 @@ export const useUserStore = create<UserState>()(
             },
         }),
         {
-            name: 'user-storage',
+            name: 'cw-user-storage',
         }
     )
 );

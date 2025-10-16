@@ -2,7 +2,7 @@
   <div class="bg-grey-1">
     <div class="row full-width q-pa-md q-gutter-y-lg">
       <about-card
-        v-for="(info, idx) of store.aboutUs"
+        v-for="(info, idx) of store.aboutUs.data"
         :key="`about-us-${idx}`"
         :info="info"
       ></about-card>

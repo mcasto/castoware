@@ -1,0 +1,22 @@
+[
+  {
+    "label": "Home",
+    "path": "/"
+  },
+  {
+    "label": "Admin Dashboard",
+    "path": "/admin"
+  },
+  {
+    "label": "Contacts",
+    "path": "/admin/contacts"
+  },
+  {
+    "label": "Portfolio",
+    "path": "/admin/portfolio"
+  },
+  {
+    "label": "About Us",
+    "path": "/admin/about-us"
+  }
+]

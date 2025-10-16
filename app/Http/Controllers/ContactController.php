@@ -28,25 +28,28 @@ class ContactController extends Controller
         $contact = Contact::create($validator->valid());
 
         // send email about contact
-        if (config('app.env') == 'production') {
-            try {
-                Mail::to(config('mail.to.mike'))
-                    ->send(new ContactMailer($contact));
+        try {
+            Mail::to(config('mail.to.mike'))
+                ->send(new ContactMailer($contact));
 
-                Mail::to(config('mail.to.margaret'))
-                    ->send(new ContactMailer($contact));
-            } catch (Exception $e) {
-                logger()->error($e);
-            }
+            Mail::to(config('mail.to.margaret'))
+                ->send(new ContactMailer($contact));
+        } catch (Exception $e) {
+            logger()->error($e);
         }
 
         return ['status' => 'success'];
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return Contact::orderBy('created_at', 'desc')
-            ->get();
+        $user = $request->user();
+
+        return [
+            'contacts' => Contact::orderBy('created_at', 'desc')
+                ->get(),
+            'last_viewed' => $user->last_viewed_contacts
+        ];
     }
 
     public function destroy(int $id)
