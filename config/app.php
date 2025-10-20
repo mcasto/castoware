@@ -123,4 +123,5 @@ return [
         'store' => env('APP_MAINTENANCE_STORE', 'database'),
     ],
 
+    'apiflash_key' => env('APIFLASH_KEY')
 ];

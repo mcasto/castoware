@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+// mc-todo: update to use `php artisan app:update-portfolio-image --id={id} --url={url}`
+
 class PortfolioController extends Controller
 {
     public function index()
