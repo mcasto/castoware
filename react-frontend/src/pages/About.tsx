@@ -1,11 +1,10 @@
 // pages/about.tsx
 import { useState, useEffect } from 'react';
 import api from '../assets/call-api';
-import AboutCard from '../components/AboutCard';
-import type { AboutInfo, ApiResponse } from '../types/about';
+import type { AboutData, ApiResponse } from '../types/about';
 
 function About() {
-    const [aboutItems, setAboutItems] = useState<AboutInfo[] | null>(null);
+    const [aboutData, setAboutData] = useState<AboutData | null>(null);
     const [loading, setLoading] = useState(true);
     const [showLoading, setShowLoading] = useState(false);
 
@@ -17,21 +16,22 @@ function About() {
 
         async function fetchAboutData() {
             try {
-                // Fixed: Use AboutInfo instead of About
-                const response = await api<ApiResponse<AboutInfo>>({
+                const response = await api<ApiResponse<AboutData>>({
                     path: '/about-us',
                     method: 'get'
                 });
 
-                if (response.status === 'success') {
-                    setAboutItems(response.data || null);
+                console.log({ response })
+
+                if (response.status === 'success' && response.data) {
+                    setAboutData(response.data);
                 }
             } catch (error) {
-                console.error('Failed to fetch about:', error);
+                console.error('Failed to fetch about data:', error);
             } finally {
                 setLoading(false);
-                clearTimeout(loadingTimer); // Clear the timer
-                setShowLoading(false); // Ensure loading message is hidden
+                clearTimeout(loadingTimer);
+                setShowLoading(false);
             }
         }
 
@@ -46,19 +46,87 @@ function About() {
     // Show loading only after delay AND while still loading
     if (loading && showLoading) return <div className="flex justify-center items-center h-64">Loading...</div>;
 
-    // Show error only if not loading AND no items
-    if (!loading && !aboutItems) return <div className="flex justify-center items-center h-64">Failed to load about</div>;
+    // Show error only if not loading AND no data
+    if (!loading && !aboutData) return <div className="flex justify-center items-center h-64">Failed to load about page</div>;
 
-    // Show about items when we have them
+    // Add a safety check here - if aboutData is still null, show loading
+    if (!aboutData) {
+        return <div className="flex justify-center items-center h-64">Loading...</div>;
+    }
+
+    // Use the data from backend - response.data contains colors and teamMembers
+    const { colors, teamMembers, together, goal } = aboutData;
+
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="grid grid-cols-1 gap-6">
-                {aboutItems?.map((about, index) => (
-                    <AboutCard
-                        key={`about-${index}-${about.name}`}
-                        info={about}
-                    />
-                ))}
+        <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-4xl mx-auto">
+                {/* Header */}
+                <div className="text-center mb-16">
+                    <h1 className="text-4xl font-bold mb-4" style={{ color: colors.primary }}>
+                        About CastoWare
+                    </h1>
+                    <div className="w-24 h-1 mx-auto mb-6" style={{ backgroundColor: colors.secondary }}></div>
+                </div>
+
+                {/* Team Members */}
+                <div className="space-y-16">
+                    {teamMembers.map((member) => (
+                        <div key={member.name} className="flex flex-col lg:flex-row gap-8">
+                            {/* Left side - Name and Role */}
+                            <div className="lg:w-1/3">
+                                <h2
+                                    className="text-2xl font-bold mb-2"
+                                    style={{ color: colors.primary }}
+                                >
+                                    {member.name}
+                                </h2>
+                                <p
+                                    className="text-lg font-semibold mb-4"
+                                    style={{ color: colors.secondary }}
+                                >
+                                    {member.role}
+                                </p>
+                                <div className="w-16 h-1" style={{ backgroundColor: colors.accent }}></div>
+                            </div>
+
+                            {/* Right side - Bio */}
+                            <div className="lg:w-2/3 space-y-4 text-gray-700">
+                                {member.bio.map((paragraph, idx) => (
+                                    <p
+                                        key={idx}
+                                        className="leading-relaxed"
+                                        dangerouslySetInnerHTML={{ __html: paragraph }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
+                    ))}
+                </div>
+
+                {/* Together Section */}
+                <div className="mt-20 pt-12 border-t border-gray-200">
+                    <div className="text-center max-w-3xl mx-auto">
+                        <h3
+                            className="text-2xl font-bold mb-6"
+                            style={{ color: colors.primary }}
+                        >
+                            {together.label}
+                        </h3>
+                        <p className="text-lg text-gray-700 mb-8 leading-relaxed" dangerouslySetInnerHTML={{ __html: together.text }}>
+
+                        </p>
+
+                        <div className="bg-gray-50 rounded-lg p-8 border-l-4" style={{ borderLeftColor: colors.accent }}>
+                            <p
+                                className="text-xl font-semibold italic"
+                                style={{ color: colors.primary }}
+                                dangerouslySetInnerHTML={{ __html: goal }}
+                            >
+
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );
