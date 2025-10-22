@@ -10,6 +10,7 @@ import AdminToolbar from './components/AdminToolbar';
 import AdminContacts from './pages/admin/Contacts';
 // import AdminPortfolio from './pages/admin/Portfolio';
 import AdminAbout from './pages/admin/About';
+import FooterComponent from './components/FooterComponent';
 
 function App() {
     const location = useLocation();
@@ -36,6 +37,8 @@ function App() {
                     }
                 />
             </Routes>
+
+            <FooterComponent />
         </div>
     );
 }
