@@ -3,6 +3,22 @@ import { useState, useEffect } from 'react';
 import api from '../assets/call-api';
 import type { AboutData, ApiResponse } from '../types/about';
 
+import mikeWorking from '../assets/images/mike-working.jpg'
+import megWorking from '../assets/images/meg-working.jpg'
+import togetherImage from '../assets/images/together.jpg'
+
+const images = [
+    {
+        name: 'Mike Casto',
+        image: mikeWorking
+    },
+    {
+        name: 'Margaret Westlake',
+        image: megWorking
+    },
+]
+
+
 function About() {
     const [aboutData, setAboutData] = useState<AboutData | null>(null);
     const [loading, setLoading] = useState(true);
@@ -69,9 +85,9 @@ function About() {
                 {/* Team Members */}
                 <div className="space-y-16">
                     {teamMembers.map((member) => (
-                        <div key={member.name} className="flex flex-col lg:flex-row gap-8">
+                        <div key={member.name} className="flex flex-col lg:flex-row gap-8" >
                             {/* Left side - Name and Role */}
-                            <div className="lg:w-1/3">
+                            <div className="lg:w-1/3" >
                                 <h2
                                     className="text-2xl font-bold mb-2"
                                     style={{ color: colors.primary }}
@@ -85,6 +101,16 @@ function About() {
                                     {member.role}
                                 </p>
                                 <div className="w-16 h-1" style={{ backgroundColor: colors.accent }}></div>
+
+                                <div>
+                                    {images.find(img => img.name === member.name) && (
+                                        <img
+                                            src={images.find(img => img.name === member.name)?.image}
+                                            alt={member.name}
+                                            className="  mt-2" style={{ height: '300px', objectFit: 'contain' }}
+                                        />
+                                    )}
+                                </div>
                             </div>
 
                             {/* Right side - Bio */}
@@ -103,30 +129,41 @@ function About() {
 
                 {/* Together Section */}
                 <div className="mt-20 pt-12 border-t border-gray-200">
-                    <div className="text-center max-w-3xl mx-auto">
-                        <h3
-                            className="text-2xl font-bold mb-6"
-                            style={{ color: colors.primary }}
-                        >
-                            {together.label}
-                        </h3>
-                        <p className="text-lg text-gray-700 mb-8 leading-relaxed" dangerouslySetInnerHTML={{ __html: together.text }}>
+                    <div className="flex flex-col lg:flex-row gap-8 max-w-4xl mx-auto">
+                        {/* Left side - Image */}
+                        <div className="lg:w-1/3">
+                            <img
+                                src={togetherImage}
+                                alt="Together"
+                                className="mt-2"
+                                style={{ height: '200px', objectFit: 'contain' }}
+                            />
+                        </div>
 
-                        </p>
-
-                        <div className="bg-gray-50 rounded-lg p-8 border-l-4" style={{ borderLeftColor: colors.accent }}>
-                            <p
-                                className="text-xl font-semibold italic"
+                        {/* Right side - Content */}
+                        <div className="lg:w-2/3">
+                            <h3
+                                className="text-2xl font-bold mb-6"
                                 style={{ color: colors.primary }}
-                                dangerouslySetInnerHTML={{ __html: goal }}
                             >
-
+                                {together.label}
+                            </h3>
+                            <p className="text-lg text-gray-700 mb-8 leading-relaxed" dangerouslySetInnerHTML={{ __html: together.text }}>
                             </p>
+
+                            <div className="bg-gray-50 rounded-lg p-8 border-l-4" style={{ borderLeftColor: colors.accent }}>
+                                <p
+                                    className="text-xl font-semibold italic"
+                                    style={{ color: colors.primary }}
+                                    dangerouslySetInnerHTML={{ __html: goal }}
+                                >
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 

@@ -1,8 +1,8 @@
-import image from '../assets/images/office.jpg'
+import image from '../assets/images/meg-solo.jpg'
 
 const WhatWeOfferImage = () => {
     return (
-        <img src={image} />
+        <img src={image} className="mt-5" />
     )
 };
 

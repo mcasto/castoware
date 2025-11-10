@@ -1,8 +1,8 @@
-import image from '../assets/images/web-design.jpg'
+import image from '../assets/images/mike-solo.jpg'
 
 const HeaderImage = () => {
     return (
-        <img src={image} />
+        <img src={image} className='mt-7' />
     );
 };
 

@@ -21,11 +21,11 @@ function Home() {
 
             <div className="max-w-6xl mx-auto mt-5">
                 <div className="flex flex-col md:flex-row ">
-                    <div className="w-full md:w-1/2">
+                    <div className="hidden md:block md:w-1/2">
                         <WhatWeOfferImage />
                     </div>
 
-                    <div className="hidden md:block md:w-1/2">
+                    <div className="w-full md:w-1/2">
                         <WhatWeOfferContents />
                     </div>
                 </div>
