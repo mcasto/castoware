@@ -8,7 +8,7 @@ import Login from './pages/Login';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import AdminToolbar from './components/AdminToolbar';
 import AdminContacts from './pages/admin/Contacts';
-// import AdminPortfolio from './pages/admin/Portfolio';
+import AdminPortfolio from './pages/admin/Portfolio';
 import AdminAbout from './pages/admin/About';
 import FooterComponent from './components/FooterComponent';
 
@@ -49,7 +49,7 @@ function AdminRoutes() {
         <Routes>
             <Route path="/" element={<AdminDashboard />} />
             <Route path="/contacts" element={<AdminContacts />} />
-            {/* <Route path="/portfolio" element={<AdminPortfolio />} /> */}
+            <Route path="/portfolio" element={<AdminPortfolio />} />
             <Route path="/about-us" element={<AdminAbout />} />
         </Routes>
     );

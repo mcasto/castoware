@@ -43,6 +43,8 @@ Route::controller(PortfolioController::class)
             ->middleware('auth:sanctum');
         Route::post('/portfolio', 'store')
             ->middleware('auth:sanctum');
+        Route::put('/portfolio/reorder', 'reorder')
+            ->middleware('auth:sanctum');
         Route::put('/portfolio/{id}', 'update')
             ->middleware('auth:sanctum');
         Route::delete('/portfolio/{id}', 'destroy')

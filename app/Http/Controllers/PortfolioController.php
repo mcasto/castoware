@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Portfolio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
-// mc-todo: update to use `php artisan app:update-portfolio-image --id={id} --url={url}`
 
 class PortfolioController extends Controller
 {
@@ -29,8 +27,7 @@ class PortfolioController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'site_name' => 'string|required',
-            'url' => 'string|required',
-            'filename' => 'string|required'
+            'url' => 'string|required|url'
         ]);
 
         if ($validator->fails()) {
@@ -39,33 +36,35 @@ class PortfolioController extends Controller
 
         $valid = $validator->valid();
 
-        $filename = $request->filename;
-        $contents = Storage::disk('local')
-            ->get("uploaded-images/{$filename}");
-        Storage::disk('public')
-            ->put("portfolio/{$filename}", $contents);
-        Storage::disk('local')
-            ->delete("uploaded-images/{$filename}");
+        $sortOrder = Portfolio::max('sort_order') ?? -1;
 
-        $sortOrder = Portfolio::max('sort_order');
-
-        $rec = [
+        $rec = Portfolio::create([
             'site_name' => $valid['site_name'],
             'url' => $valid['url'],
-            'image' => "/storage/portfolio/{$filename}",
+            'image' => '', // Will be updated by artisan command
             'sort_order' => $sortOrder + 1
-        ];
+        ]);
 
-        $stored = Portfolio::create($rec);
+        // Call artisan command to generate screenshot
+        Artisan::call('app:update-portfolio-image', [
+            '--id' => $rec->id,
+            '--url' => $valid['url']
+        ]);
 
-        return ['status' => 'success', 'rec' => $stored];
+        // Refresh to get updated image path
+        $rec->refresh();
+
+        // Clear cache
+        Cache::forget('castoware-portfolio');
+
+        return ['status' => 'success', 'data' => $rec];
     }
 
     public function update(int $id, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'site_name' => 'string|required',
-            'url' => 'string|required'
+            'url' => 'string|required|url'
         ]);
 
         if ($validator->fails()) {
@@ -74,28 +73,57 @@ class PortfolioController extends Controller
 
         $rec = Portfolio::find($id);
         if (!$rec) {
-            return ['status' => 'error', 'message' => 'Profile record not found.'];
+            return ['status' => 'error', 'message' => 'Portfolio record not found.'];
         }
 
         $valid = $validator->valid();
 
-        if ($valid['replaceImage']) {
-            $filename = $request->filename;
-            $contents = Storage::disk('local')
-                ->get("uploaded-images/{$filename}");
-            Storage::disk('public')
-                ->put("portfolio/{$filename}", $contents);
-            Storage::disk('local')
-                ->delete("uploaded-images/{$filename}");
+        $rec->site_name = $valid['site_name'];
 
-            $rec->image = "/storage/portfolio/{$filename}";
+        // If URL changed, regenerate screenshot
+        if ($rec->url !== $valid['url']) {
+            $rec->url = $valid['url'];
+            $rec->save();
+
+            Artisan::call('app:update-portfolio-image', [
+                '--id' => $rec->id,
+                '--url' => $valid['url']
+            ]);
+
+            $rec->refresh();
+        } else {
+            $rec->save();
         }
 
-        $rec->site_name = $valid['site_name'];
-        $rec->url = $valid['url'];
-        $rec->save();
+        // Clear cache
+        Cache::forget('castoware-portfolio');
 
-        return ['status' => 'success', 'rec' => $rec];
+        return ['status' => 'success', 'data' => $rec];
+    }
+
+    public function reorder(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'items' => 'required|array',
+            'items.*.id' => 'required|integer|exists:portfolios,id',
+            'items.*.sort_order' => 'required|integer|min:0'
+        ]);
+
+        if ($validator->fails()) {
+            return ['status' => 'error', 'message' => 'Invalid request.'];
+        }
+
+        $items = $request->input('items');
+
+        foreach ($items as $item) {
+            Portfolio::where('id', $item['id'])
+                ->update(['sort_order' => $item['sort_order']]);
+        }
+
+        // Clear cache
+        Cache::forget('castoware-portfolio');
+
+        return ['status' => 'success', 'message' => 'Order updated successfully.'];
     }
 
     public function destroy(int $id)
@@ -106,6 +134,9 @@ class PortfolioController extends Controller
         }
 
         $rec->delete();
+
+        // Clear cache
+        Cache::forget('castoware-portfolio');
 
         return ['status' => 'success'];
     }
