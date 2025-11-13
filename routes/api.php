@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 Route::controller(AboutController::class)
     ->group(function () {
         Route::get('/about-us', 'index');
+        Route::put('/about-us', 'update')
+            ->middleware('auth:sanctum');
     });
 
 Route::controller(AuthController::class)

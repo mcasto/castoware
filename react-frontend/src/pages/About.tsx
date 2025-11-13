@@ -37,6 +37,7 @@ function About() {
                     method: 'get'
                 });
 
+
                 if (response.status === 'success' && response.data) {
                     setAboutData(response.data);
                 }
