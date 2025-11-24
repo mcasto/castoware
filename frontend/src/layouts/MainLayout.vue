@@ -57,7 +57,7 @@
 
 <script setup>
 import { startCase } from "lodash-es";
-import { Screen } from "quasar";
+import { Screen, uid } from "quasar";
 import { computed, ref } from "vue";
 import { useRoute } from "vue-router";
 import ImageAttributions from "src/components/ImageAttributions.vue";
