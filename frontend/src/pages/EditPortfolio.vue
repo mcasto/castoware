@@ -51,7 +51,12 @@
         <q-separator></q-separator>
 
         <q-card-actions class="justify-end">
-          <q-btn color="accent" label="Save" type="submit"></q-btn>
+          <q-btn
+            color="accent"
+            label="Save"
+            type="submit"
+            :loading="loading"
+          ></q-btn>
         </q-card-actions>
       </q-card>
     </q-form>
@@ -83,11 +88,14 @@ const form = ref({
   filename: null,
 });
 
+const loading = ref(null);
+
 const testLink = () => {
   window.open(form.value.url);
 };
 
 const onSubmit = async () => {
+  loading.value = true;
   const payload = form.value;
   const path =
     route.params.id == "new" ? "/portfolio" : `/portfolio/${payload.id}`;
@@ -102,6 +110,8 @@ const onSubmit = async () => {
       position: "center",
     });
 
+    loading.value = false;
+
     return;
   }
 
@@ -112,6 +122,8 @@ const onSubmit = async () => {
     message: "Portfolio Updated",
     position: "center",
   });
+
+  loading.value = false;
 
   store.router.push({ name: "admin-portfolio" });
 };
