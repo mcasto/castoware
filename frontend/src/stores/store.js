@@ -9,6 +9,7 @@ export const useStore = defineStore(
         contacts: null,
         portfolio: null,
       }),
+      home: ref(null),
       portfolio: ref(null),
       token: ref(null),
     };
@@ -19,7 +20,7 @@ export const useStore = defineStore(
   },
   {
     persist: {
-      key: "default-key",
+      key: "castoware",
     },
   }
 );

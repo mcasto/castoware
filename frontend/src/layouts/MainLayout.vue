@@ -34,16 +34,12 @@
       </q-toolbar>
       <router-view />
       <q-footer class="bg-white text-black">
-        <q-toolbar>
-          <q-btn
-            icon="mdi-image-area"
-            round
-            flat
-            @click="showAttributions = true"
-          >
-            <q-tooltip class="text-no-wrap">Image Attributions</q-tooltip>
-          </q-btn>
-        </q-toolbar>
+        <q-toolbar
+          class="flex justify-center q-py-md"
+          style="border-top: 1px solid lightgray;"
+        >
+          ©{{ new Date().getFullYear() }} CastoWare Development, LLC</q-toolbar
+        >
       </q-footer>
 
       <q-dialog v-model="showAttributions">

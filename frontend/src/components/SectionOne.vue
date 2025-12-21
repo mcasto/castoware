@@ -2,7 +2,7 @@
   <div class="row" id="one">
     <div class="column col-12 col-md-6 justify-center q-pt-sm">
       <q-img
-        src="/images/castoware-logo.jpeg"
+        src="/storage/images/castoware-logo.jpeg"
         fit="contain"
         width="80%"
         class="q-ml-lg"
@@ -36,7 +36,7 @@
     </div>
     <div class="col-0 col-md-6">
       <q-img
-        src="/images/web-design.jpg"
+        src="/storage/images/mike-solo.jpg"
         fit="cover"
         style="height: 100%; width: 100%;"
       ></q-img>

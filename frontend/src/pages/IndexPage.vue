@@ -1,34 +1,24 @@
 <template>
   <q-page class="flex">
-    <section-one @scroll-to="scrollTo"></section-one>
-    <section-two @scroll-to="scrollTo"></section-two>
-    <section-three @scroll-to="scrollTo"></section-three>
+    <div id="section-one" v-html="store.home.one"></div>
+    <div id="section-two" v-html="store.home.two"></div>
+    <section-three @scroll-to="scrollTo" id="section-three"></section-three>
   </q-page>
 </template>
 
-<script>
+<script setup>
 import { scroll } from "quasar";
-const { getScrollTarget, setVerticalScrollPosition } = scroll;
-
 import { useStore } from "stores/store";
-
-const store = useStore();
-
-import SectionOne from "components/SectionOne.vue";
-import SectionTwo from "components/SectionTwo.vue";
 import SectionThree from "components/SectionThree.vue";
 
-export default {
-  name: "IndexPage",
-  components: { SectionOne, SectionTwo, SectionThree },
-  methods: {
-    scrollTo(section) {
-      const el = document.getElementById(section);
-      const target = getScrollTarget(el);
-      const offset = el.offsetTop;
-      const duration = 1000;
-      setVerticalScrollPosition(target, offset, duration);
-    },
-  },
+const { getScrollTarget, setVerticalScrollPosition } = scroll;
+const store = useStore();
+
+const scrollTo = (section) => {
+  const el = document.getElementById(section);
+  const target = getScrollTarget(el);
+  const offset = el.offsetTop;
+  const duration = 1000;
+  setVerticalScrollPosition(target, offset, duration);
 };
 </script>

@@ -87,6 +87,10 @@ const routes = [
       {
         path: "",
         component: () => import("pages/IndexPage.vue"),
+        beforeEnter: async () => {
+          const store = useStore();
+          store.home = await callApi({ path: "/home", method: "get" });
+        },
         name: "home",
       },
       {

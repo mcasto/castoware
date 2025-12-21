@@ -1,7 +1,7 @@
 <template>
   <div
     id="three"
-    class="flex column flex-center q-mt-md"
+    class="flex column flex-center q-my-md"
     style="width: 100%; height: 100%;"
   >
     <div>
@@ -18,6 +18,9 @@
     >
       <div class="q-mt-md row q-pa-sm">
         <q-input
+          dense
+          stack-label
+          placeholder="Your full name"
           type="text"
           label="Name"
           outlined
@@ -26,6 +29,9 @@
           :rules="[(v) => !!v || 'Name Required']"
         ></q-input>
         <q-input
+          dense
+          stack-label
+          placeholder="your.email@example.com"
           type="email"
           label="E-Mail"
           outlined
@@ -41,6 +47,9 @@
         ></q-input>
 
         <q-input
+          dense
+          stack-label
+          placeholder="What is this regarding?"
           type="text"
           label="Subject"
           outlined
@@ -50,6 +59,9 @@
         ></q-input>
 
         <q-input
+          dense
+          stack-label
+          placeholder="Tell us about your project ..."
           type="textarea"
           outlined
           class="col-12 q-mt-md"
@@ -118,37 +130,3 @@ const onSubmit = async () => {
   contactForm.value.reset();
 };
 </script>
-
-<!-- <script>
-  import { useStore } from "stores/store";
-  import { mapActions } from "pinia";
-
-  export default {
-    name: "SectionThree",
-    data: () => ({
-      name: null,
-      email: null,
-      message: null,
-    }),
-    methods: {
-      ...mapActions(useStore, ["sendContact"]),
-      onReset() {
-        this.name = null;
-        this.email = null;
-        this.message = null;
-      },
-      onSubmit() {
-        const form = this.$refs.contactForm;
-        form.validate().then(() => {
-          this.sendContact({
-            name: this.name,
-            email: this.email,
-            message: this.message,
-          }).then(() => {
-            form.reset();
-          });
-        });
-      },
-    },
-  };
-</script> -->

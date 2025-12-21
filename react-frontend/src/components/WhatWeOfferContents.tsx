@@ -23,7 +23,7 @@ const WhatWeOfferContents = () => {
                     <strong><em>Prism</em> by CastoWare</strong>
                 </div>
                 <div className="ml-5 text-sm">
-                    Beginning development in Q4 2025, <em>Prism</em> will address long-standing gaps in the US healthcare provider data with an innovative approach to accuracy and timeliness.
+                    <em>Prism</em> will address long-standing gaps in the US healthcare provider data with an innovative approach to accuracy and timeliness. Development began in Q4 2025.
                 </div>
             </div>
 
