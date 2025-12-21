@@ -10,19 +10,30 @@ class Portfolio extends Model
 {
     protected $fillable = [
         'site_name',
-        'image',
         'url',
         'sort_order'
     ];
+
+    public function getImageAttribute($value)
+    {
+        // Try to find the file with common extensions
+        $extensions = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+        foreach ($extensions as $ext) {
+            if (Storage::disk('public')->exists("portfolio/{$this->id}.{$ext}")) {
+                return "/storage/portfolio/{$this->id}.{$ext}";
+            }
+        }
+
+        // Fallback to stored value or ID only if no file found
+        return $value ?: "/storage/portfolio/{$this->id}";
+    }
 
     protected static function booted()
     {
         static::deleting(function ($model) {
             // Delete the associated file from storage
-            if ($model->image) {
-                // Remove the '/storage/' prefix to get the actual path in storage
-                $filePath = str_replace('/storage/', '', $model->image);
-                Storage::disk('public')->delete($filePath);
+            if ($model->id) {
+                Storage::disk('public')->delete("portfolio/{$model->id}");
             }
         });
 

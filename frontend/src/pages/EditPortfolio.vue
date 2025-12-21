@@ -38,34 +38,9 @@
                   <q-btn icon="link" @click="testLink" color="accent"></q-btn>
                 </template>
               </q-input>
-
-              <div class="flex justify-end" v-if="item?.image">
-                <q-btn
-                  :label="
-                    form.replaceImage ? 'Cancel Image Change' : 'Change Image'
-                  "
-                  color="accent"
-                  @click="form.replaceImage = !form.replaceImage"
-                ></q-btn>
-              </div>
             </div>
 
             <div class="col">
-              <q-uploader
-                v-if="form.replaceImage"
-                auto-upload
-                field-name="uploadedFile"
-                url="/api/handle-upload"
-                :form-fields="[
-                  { name: 'uploadType', value: 'portfolio' },
-                  { name: 'id', value: form.id },
-                ]"
-                :headers="[
-                  { name: 'Authorization', value: `Bearer ${store.token}` },
-                ]"
-                @uploaded="onUpload"
-              ></q-uploader>
-
               <div v-if="!form.replaceImage">
                 <q-img :src="item?.image"></q-img>
               </div>
@@ -94,7 +69,9 @@ const store = useStore();
 const route = useRoute();
 
 const item = computed(() => {
-  return store.admin.portfolio.find(({ id }) => id == route.params.id);
+  const portfolio = store.admin.portfolio.data || store.admin.portfolio;
+
+  return portfolio.find(({ id }) => id == route.params.id);
 });
 
 const form = ref({
@@ -111,14 +88,6 @@ const testLink = () => {
 };
 
 const onSubmit = async () => {
-  if (form.value.replaceImage && !form.value.imageUploaded) {
-    Notify.create({
-      type: "negative",
-      message: "Image selection required.",
-      position: "center",
-    });
-    return;
-  }
   const payload = form.value;
   const path =
     route.params.id == "new" ? "/portfolio" : `/portfolio/${payload.id}`;

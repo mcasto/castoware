@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -22,8 +22,9 @@ class AuthController extends Controller
 
         $valid = $validator->valid();
 
-        if (Auth::attempt($valid)) {
-            $user = User::where('email', $valid['email'])->first();
+        $user = User::where('email', $valid['email'])->first();
+
+        if ($user && Hash::check($valid['password'], $user->password)) {
             $token = $user->createToken('castoware-admin')->plainTextToken;
             return ['status' => 'success', 'token' => $token];
         }

@@ -45,6 +45,8 @@ class PortfolioController extends Controller
             'sort_order' => $sortOrder + 1
         ]);
 
+        logger()->info($valid['url']);
+
         // Call artisan command to generate screenshot
         Artisan::call('app:update-portfolio-image', [
             '--id' => $rec->id,

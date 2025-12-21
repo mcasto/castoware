@@ -28,6 +28,7 @@
 import { useStore } from "src/stores/store";
 
 const store = useStore();
+console.log(store.portfolio);
 
 const openLink = (url) => {
   window.open(url);

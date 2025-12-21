@@ -16,13 +16,14 @@ Route::controller(AboutController::class)
             ->middleware('auth:sanctum');
     });
 
+// Login route isolated - no middleware
+Route::post('/login', [AuthController::class, 'login']);
+
 Route::controller(AuthController::class)
+    ->middleware('auth:sanctum')
     ->group(function () {
-        Route::post('/login', 'login');
-        Route::get('/validate-token', 'validateToken')
-            ->middleware('auth:sanctum');
-        Route::get('/logout', 'logout')
-            ->middleware('auth:sanctum');
+        Route::get('/validate-token', 'validateToken');
+        Route::get('/logout', 'logout');
     });
 
 Route::controller(ContactController::class)

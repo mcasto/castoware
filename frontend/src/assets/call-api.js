@@ -26,14 +26,14 @@ export default async ({ path, method, payload, useAuth = false }) => {
     }
   }
 
-  // Execute the request
-  // return request[method]().json();
-
-  const response = await request[method]();
-
-  return response
-    .error(422, (error) => {
-      return error.json;
-    })
-    .json();
+  // Execute the request with error handling
+  try {
+    return await request[method]().json();
+  } catch (error) {
+    // If the error has a JSON response, return it
+    if (error.json) {
+      return await error.json;
+    }
+    throw error;
+  }
 };

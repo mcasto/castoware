@@ -21,9 +21,14 @@ const routes = [
         const response = await callApi({
           path: "/validate-token",
           method: "get",
+          useAuth: true,
         });
+
         if (response.status == "success") {
           validUser = true;
+        } else {
+          next("/login");
+          return;
         }
       }
 
@@ -42,11 +47,18 @@ const routes = [
         name: "admin-contacts",
         beforeEnter: async () => {
           const store = useStore();
-          store.admin.contacts = await callApi({
+          const response = await callApi({
             path: "/contacts",
             method: "get",
             useAuth: true,
           });
+
+          if (response.status == "success") {
+            store.admin.contacts = response.data.contacts;
+          } else {
+            store.admin.contacts = [];
+            console.error({ error: response });
+          }
         },
       },
       {
@@ -60,7 +72,12 @@ const routes = [
             method: "get",
           });
 
-          store.admin.portfolio = response;
+          if (response.status == "success") {
+            store.admin.portfolio = response.data;
+          } else {
+            store.admin.portfolio = [];
+            console.error({ error: response });
+          }
         },
         name: "admin-portfolio",
       },
@@ -70,10 +87,17 @@ const routes = [
         beforeEnter: async () => {
           const store = useStore();
 
-          store.admin.portfolio = await callApi({
+          const response = await callApi({
             path: "/portfolio",
             method: "get",
           });
+
+          if (response.status == "success") {
+            store.admin.portfolio = response.data;
+          } else {
+            store.admin.portfolio = [];
+            console.error({ error: response });
+          }
         },
         name: "edit-portfolio",
       },
@@ -98,10 +122,17 @@ const routes = [
         component: () => import("pages/PortfolioPage.vue"),
         beforeEnter: async () => {
           const store = useStore();
-          store.portfolio = await callApi({
+          const response = await callApi({
             path: "/portfolio",
             method: "get",
           });
+
+          if (response.status == "success") {
+            store.portfolio = response.data;
+          } else {
+            store.portfolio = [];
+            console.error({ error: response });
+          }
         },
         name: "portfolio",
       },
@@ -110,7 +141,14 @@ const routes = [
         component: () => import("pages/AboutPage.vue"),
         beforeEnter: async () => {
           const store = useStore();
-          store.aboutUs = await callApi({ path: "/about-us", method: "get" });
+          const response = await callApi({ path: "/about-us", method: "get" });
+
+          if (response.status == "success") {
+            store.aboutUs = response.html;
+          } else {
+            store.portfolio = [];
+            console.error({ error: response });
+          }
         },
         name: "about",
       },
