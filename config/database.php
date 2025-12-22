@@ -83,6 +83,26 @@ return [
             ]) : [],
         ],
 
+        'ninja' => [
+            'driver' => 'mariadb',
+            'url' => env('NINJA_URL'),
+            'host' => env('NINJA_HOST', '127.0.0.1'),
+            'port' => env('NINJA_PORT', '3306'),
+            'database' => env('NINJA_DATABASE', 'laravel'),
+            'username' => env('NINJA_USERNAME', 'root'),
+            'password' => env('NINJA_PASSWORD', ''),
+            'unix_socket' => env('NINJA_SOCKET', ''),
+            'charset' => env('NINJA_CHARSET', 'utf8mb4'),
+            'collation' => env('NINJA_COLLATION', 'utf8mb4_unicode_ci'),
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+            'options' => extension_loaded('pdo_mysql') ? array_filter([
+                PDO::MYSQL_ATTR_SSL_CA => env('MYSQL_ATTR_SSL_CA'),
+            ]) : [],
+        ],
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DB_URL'),
@@ -148,7 +168,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')).'-database-'),
+            'prefix' => env('REDIS_PREFIX', Str::slug((string) env('APP_NAME', 'laravel')) . '-database-'),
             'persistent' => env('REDIS_PERSISTENT', false),
         ],
 

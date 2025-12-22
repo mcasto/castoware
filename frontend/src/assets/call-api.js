@@ -11,12 +11,9 @@ export default async ({ path, method, payload, useAuth = false }) => {
 
   // Handle GET vs. other methods
   if (method === "get" && payload) {
-    // Append payload to path for GET (e.g., /api/test/1)
-
-    const payloadValue = Object.values(payload).shift();
-
-    const url = `${path}/${payloadValue}`;
-
+    // Build query string for GET requests
+    const queryParams = new URLSearchParams(payload).toString();
+    const url = `${path}?${queryParams}`;
     request = request.url(url);
   } else {
     // For non-GET methods, use payload as the body

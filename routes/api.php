@@ -4,6 +4,7 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\UploadController;
 use Illuminate\Http\Request;
@@ -60,6 +61,13 @@ Route::controller(HomeController::class)
         Route::get('/home', 'index');
     });
 
+Route::controller(PaymentController::class)
+    ->prefix('payment')
+    ->group(function () {
+        Route::get('/create/{invoice}', 'create');
+        Route::get('/capture', 'capture');
+        Route::get('/cancel', 'cancel');
+    });
 
 Route::post('/handle-upload', [UploadController::class, 'store'])
     ->middleware('auth:sanctum');

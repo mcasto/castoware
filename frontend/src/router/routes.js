@@ -2,12 +2,18 @@ import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 
 const routes = [
+  /**
+   * Login
+   */
   {
     path: "/login",
     component: () => import("pages/AdminLogin.vue"),
     name: "login",
   },
 
+  /**
+   * Admin routes
+   */
   {
     path: "/admin",
     component: () => import("layouts/AdminLayout.vue"),
@@ -104,6 +110,23 @@ const routes = [
     ],
   },
 
+  /**
+   * Payment routes
+   */
+  {
+    path: "/payment/complete",
+    component: () => import("pages/PaymentCompletePage.vue"),
+    name: "payment-complete",
+  },
+  {
+    path: "/payment/cancelled",
+    component: () => import("pages/PaymentCancelledPage.vue"),
+    name: "payment-cancelled",
+  },
+
+  /**
+   * Public routes
+   */
   {
     path: "/",
     component: () => import("layouts/MainLayout.vue"),

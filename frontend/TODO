@@ -1,1 +1,7 @@
-☐ Handle portfolio add/edit
+Build payment processor:
+    ☐ set up live api keys & put them into the .env on remote server
+    ✔ set up ninja database in the .env on remote server @done(25-12-22 07:14)
+    ✔ setup api to access invoice ninja database @done(25-12-22 07:10)
+    ✔ update PaymentController::create to pull `amount` from invoice ninja/invoices for invoice number @done(25-12-22 07:10)
+    ✔ update PaymentController::capture to send email about payment (possibly to update invoice ninja DB with payment info, but I don't want to corrupt that data) @done(25-12-22 07:10)
+
