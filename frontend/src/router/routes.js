@@ -1,3 +1,4 @@
+import { Loading } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 
@@ -145,6 +146,9 @@ const routes = [
         component: () => import("pages/PortfolioPage.vue"),
         beforeEnter: async () => {
           const store = useStore();
+
+          Loading.show({ message: "Loading portfolio images", delay: 300 });
+
           const response = await callApi({
             path: "/portfolio",
             method: "get",
@@ -156,6 +160,8 @@ const routes = [
             store.portfolio = [];
             console.error({ error: response });
           }
+
+          Loading.hide();
         },
         name: "portfolio",
       },

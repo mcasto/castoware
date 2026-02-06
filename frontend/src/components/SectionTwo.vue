@@ -2,7 +2,7 @@
   <div class="row" id="two" style="width: 100%;">
     <div class="col-0 col-md-6">
       <q-img
-        src="/storage/images/meg-solo.jpg"
+        src="/storage/images/meg-solo.jpeg"
         fit="cover"
         style="height: 100%; width: 100%;"
       ></q-img>

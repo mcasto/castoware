@@ -5,7 +5,7 @@ import type { AboutData, ApiResponse } from '../types/about';
 
 import mikeWorking from '../assets/images/mike-working.jpg'
 import megWorking from '../assets/images/meg-working.jpg'
-import togetherImage from '../assets/images/together.jpg'
+import togetherImage from '../assets/images/together.jpeg'
 
 const images = [
     {

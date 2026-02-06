@@ -36,7 +36,7 @@
     </div>
     <div class="col-0 col-md-6">
       <q-img
-        src="/storage/images/mike-solo.jpg"
+        src="/storage/images/mike-solo.jpeg"
         fit="cover"
         style="height: 100%; width: 100%;"
       ></q-img>

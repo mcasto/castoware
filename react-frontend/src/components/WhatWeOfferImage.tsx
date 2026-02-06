@@ -1,4 +1,4 @@
-import image from '../assets/images/meg-solo.jpg'
+import image from '../assets/images/meg-solo.jpeg'
 
 const WhatWeOfferImage = () => {
     return (

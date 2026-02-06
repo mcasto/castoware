@@ -58,7 +58,7 @@
 
                     <div class="accent-divider" style="background-color: {{ $colors['accent'] }}"></div>
 
-                    <img src="{{ asset('/storage/images/together.jpg') }}" alt="Together" class="together-image" />
+                    <img src="{{ asset('/storage/images/together.jpeg') }}" alt="Together" class="together-image" />
                 </div>
 
                 {{-- Right side - Content --}}

@@ -22,6 +22,6 @@
         </div>
     </div>
     <div class="col-0 col-md-6">
-        <img src="/storage/images/mike-solo.jpg" style="height: 100%; width: 100%; object-fit: cover;" alt="Mike Casto">
+        <img src="/storage/images/mike-solo.jpeg" style="height: 100%; width: 100%; object-fit: cover;" alt="Mike Casto">
     </div>
 </div>
