@@ -18,7 +18,7 @@
                 <li>Desktop application development for Windows, Linux, Macintosh</li>
                 <li>Flexible collaboration</li>
             </ul>
-            <div class="q-ml-md">
+            {{-- <div class="q-ml-md">
                 <div class='flex items-center'>
                     <svg viewBox="0 0 24 24" role="presentation"
                         class="mt-2 text-secondary rounded-full transition-colors"
@@ -37,7 +37,7 @@
                     long-standing gaps in US healthcare provider data with an innovative
                     approach to accuracy and timeliness. Development began in Q4 2025.
                 </div>
-            </div>
+            </div> --}}
         </div>
         <div class="text-body1 text-center">
             View our

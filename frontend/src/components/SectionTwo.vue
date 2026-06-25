@@ -23,7 +23,7 @@
           <li>Desktop application development for Windows, Linux, Macintosh</li>
           <li>Flexible collaboration</li>
         </ul>
-        <div class="q-ml-md">
+        <!-- <div class="q-ml-md">
           <q-icon name="mdi-bullhorn" size="lg" color="accent"></q-icon>
           Coming Soon!
           <div class="text-subtitle2"><em>Prism</em> by CastoWare</div>
@@ -32,7 +32,7 @@
             long-standing gaps in US healthcare provider data with an innovative
             approach to accuracy and timeliness.
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="text-body1 text-center">
         View our
