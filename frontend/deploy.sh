@@ -5,7 +5,7 @@ set -e
 SSH_KEY="$HOME/.ssh/diet_journal_deploy"
 SSH_USER="u466389499"
 SSH_HOST="ftp.castoware.com"
-REMOTE_DIR="/home/u466389499/castoware.com"        # the folder that serves index.html on the server
+REMOTE_DIR="/home/u466389499/domains/castoware.com/public_html/castoware-main/public"        # the folder that serves index.html on the server
 # ─────────────────────────────────────────────────────────────────────────────
 
 echo "Building..."
