@@ -116,7 +116,7 @@ const onSubmit = async () => {
       message:
         error.name == "TimeoutError"
           ? "The request timed out. The screenshot service may be slow or down — please try again later."
-          : "Something went wrong saving the portfolio item.",
+          : `Something went wrong saving the portfolio item${error.status ? ` (HTTP ${error.status})` : ""}.`,
     };
   }
 

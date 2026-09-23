@@ -11,6 +11,7 @@ class Portfolio extends Model
     protected $fillable = [
         'site_name',
         'url',
+        'image',
         'sort_order'
     ];
 
