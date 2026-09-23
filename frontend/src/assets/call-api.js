@@ -1,13 +1,18 @@
 import { useStore } from "src/stores/store";
 import wretch from "wretch";
 
-export default async ({ path, method, payload, useAuth = false }) => {
+export default async ({ path, method, payload, useAuth = false, timeout }) => {
   const store = useStore();
 
   // Initialize the base request
   let request = useAuth
     ? wretch("/api").auth(`Bearer ${store.token}`)
     : wretch("/api");
+
+  // Optional timeout in ms; aborts the request and rejects with a TimeoutError
+  if (timeout) {
+    request = request.options({ signal: AbortSignal.timeout(timeout) });
+  }
 
   // Handle GET vs. other methods
   if (method === "get" && payload) {

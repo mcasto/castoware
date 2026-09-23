@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Portfolio;
+use App\Services\ScreenshotService;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,7 +23,7 @@ class PortfolioController extends Controller
         return Portfolio::count();
     }
 
-    public function store(Request $request)
+    public function store(Request $request, ScreenshotService $screenshots)
     {
         $validator = Validator::make($request->all(), [
             'site_name' => 'string|required',
@@ -36,33 +36,48 @@ class PortfolioController extends Controller
 
         $valid = $validator->valid();
 
+        // Make sure the screenshot API is up before creating anything
+        if ($error = $screenshots->status()) {
+            return ['status' => 'error', 'message' => $error];
+        }
+
         $sortOrder = Portfolio::max('sort_order') ?? -1;
 
         $rec = Portfolio::create([
             'site_name' => $valid['site_name'],
             'url' => $valid['url'],
-            'image' => '', // Will be updated by artisan command
+            'image' => '', // Resolved from storage by the model accessor
             'sort_order' => $sortOrder + 1
         ]);
 
-        logger()->info($valid['url']);
-
-        // Call artisan command to generate screenshot
-        Artisan::call('app:update-portfolio-image', [
-            '--id' => $rec->id,
-            '--url' => $valid['url']
-        ]);
-
-        // Refresh to get updated image path
-        $rec->refresh();
+        $warning = $this->captureScreenshot($screenshots, $rec);
 
         // Clear cache
         Cache::forget('castoware-portfolio');
 
-        return ['status' => 'success', 'data' => $rec];
+        return ['status' => 'success', 'data' => $rec, 'warning' => $warning];
     }
 
-    public function update(int $id, Request $request)
+    /**
+     * Returns null on success, or a warning message if the screenshot failed.
+     */
+    private function captureScreenshot(ScreenshotService $screenshots, Portfolio $rec): ?string
+    {
+        set_time_limit(ScreenshotService::CONNECT_TIMEOUT + ScreenshotService::CAPTURE_TIMEOUT + 15);
+
+        $error = $screenshots->capture($rec->id, $rec->url);
+
+        if ($error) {
+            logger()->warning("Portfolio {$rec->id} screenshot failed: {$error}");
+            return "Site saved, but the screenshot could not be captured: {$error}";
+        }
+
+        $rec->refresh();
+
+        return null;
+    }
+
+    public function update(int $id, Request $request, ScreenshotService $screenshots)
     {
         $validator = Validator::make($request->all(), [
             'site_name' => 'string|required',
@@ -81,18 +96,18 @@ class PortfolioController extends Controller
         $valid = $validator->valid();
 
         $rec->site_name = $valid['site_name'];
+        $warning = null;
 
         // If URL changed, regenerate screenshot
         if ($rec->url !== $valid['url']) {
+            if ($error = $screenshots->status()) {
+                return ['status' => 'error', 'message' => $error];
+            }
+
             $rec->url = $valid['url'];
             $rec->save();
 
-            Artisan::call('app:update-portfolio-image', [
-                '--id' => $rec->id,
-                '--url' => $valid['url']
-            ]);
-
-            $rec->refresh();
+            $warning = $this->captureScreenshot($screenshots, $rec);
         } else {
             $rec->save();
         }
@@ -100,7 +115,7 @@ class PortfolioController extends Controller
         // Clear cache
         Cache::forget('castoware-portfolio');
 
-        return ['status' => 'success', 'data' => $rec];
+        return ['status' => 'success', 'data' => $rec, 'warning' => $warning];
     }
 
     public function reorder(Request $request)

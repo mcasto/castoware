@@ -101,7 +101,24 @@ const onSubmit = async () => {
     route.params.id == "new" ? "/portfolio" : `/portfolio/${payload.id}`;
   const method = route.params.id == "new" ? "post" : "put";
 
-  const response = await callApi({ path, method, payload, useAuth: true });
+  let response;
+  try {
+    response = await callApi({
+      path,
+      method,
+      payload,
+      useAuth: true,
+      timeout: 60000,
+    });
+  } catch (error) {
+    response = {
+      status: "error",
+      message:
+        error.name == "TimeoutError"
+          ? "The request timed out. The screenshot service may be slow or down — please try again later."
+          : "Something went wrong saving the portfolio item.",
+    };
+  }
 
   if (response.status != "success") {
     Notify.create({
@@ -118,8 +135,8 @@ const onSubmit = async () => {
   store.admin.portfolio = await callApi({ path: "/portfolio", method: "get" });
 
   Notify.create({
-    type: "positive",
-    message: "Portfolio Updated",
+    type: response.warning ? "warning" : "positive",
+    message: response.warning || "Portfolio Updated",
     position: "center",
   });
 
