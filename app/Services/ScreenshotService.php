@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Portfolio;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
@@ -75,8 +76,11 @@ class ScreenshotService
             return 'Received empty response from the screenshot service.';
         }
 
-        // Filename must match what Portfolio::getImageAttribute looks for
-        Storage::disk('public')->put("portfolio/{$id}.jpeg", $imageContent);
+        $path = "portfolio/{$id}.jpeg";
+        Storage::disk('public')->put($path, $imageContent);
+
+        // Store the URL so reads don't have to probe the filesystem
+        Portfolio::find($id)?->update(['image' => Portfolio::imageUrl($path)]);
 
         return null;
     }

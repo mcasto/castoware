@@ -1,4 +1,3 @@
-import { Loading } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";
 
@@ -127,6 +126,10 @@ const routes = [
 
   /**
    * Public routes
+   *
+   * Data loads are intentionally not awaited: the request runs in parallel
+   * with the page chunk download, and the page renders persisted data (or a
+   * spinner) until it arrives
    */
   {
     path: "/",
@@ -135,49 +138,24 @@ const routes = [
       {
         path: "",
         component: () => import("pages/IndexPage.vue"),
-        beforeEnter: async () => {
-          const store = useStore();
-          store.home = await callApi({ path: "/home", method: "get" });
+        beforeEnter: () => {
+          useStore().loadHome();
         },
         name: "home",
       },
       {
         path: "portfolio",
         component: () => import("pages/PortfolioPage.vue"),
-        beforeEnter: async () => {
-          const store = useStore();
-
-          Loading.show({ message: "Loading portfolio images", delay: 300 });
-
-          const response = await callApi({
-            path: "/portfolio",
-            method: "get",
-          });
-
-          if (response.status == "success") {
-            store.portfolio = response.data;
-          } else {
-            store.portfolio = [];
-            console.error({ error: response });
-          }
-
-          Loading.hide();
+        beforeEnter: () => {
+          useStore().loadPortfolio();
         },
         name: "portfolio",
       },
       {
         path: "about-us",
         component: () => import("pages/AboutPage.vue"),
-        beforeEnter: async () => {
-          const store = useStore();
-          const response = await callApi({ path: "/about-us", method: "get" });
-
-          if (response.status == "success") {
-            store.aboutUs = response.html;
-          } else {
-            store.portfolio = [];
-            console.error({ error: response });
-          }
+        beforeEnter: () => {
+          useStore().loadAboutUs();
         },
         name: "about",
       },

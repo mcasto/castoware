@@ -1,6 +1,6 @@
 <div class="row" id="two" style="width: 100%;">
     <div class="col-0 col-md-6">
-        <img src="/storage/images/meg-solo.jpeg" style="height: 100%; width: 100%; object-fit: cover;" alt="Meg Casto">
+        <img src="/storage/images/meg-solo.jpeg" style="height: 100%; width: 100%; object-fit: cover;" loading="lazy" alt="Meg Casto">
     </div>
 
     <div class="column col-12 col-md-6 justify-center q-pt-sm">
@@ -45,7 +45,7 @@
             to see some of our recent work
         </div>
         <div class="text-body1 text-center q-mt-sm">
-            <a href="/about" class="text-accent">About</a>
+            <a href="/about-us" class="text-accent">About</a>
             Our Team
         </div>
         <div class="text-body1 text-center q-mt-md">

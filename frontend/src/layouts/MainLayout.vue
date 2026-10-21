@@ -26,7 +26,7 @@
           :size="Screen.gt.sm ? 'md' : 'sm'"
         ></q-btn>
         <q-btn
-          icon="mdi-cog"
+          :icon="mdiCog"
           flat
           color="secondary"
           :to="{ name: 'admin-contacts' }"
@@ -52,6 +52,7 @@
 </template>
 
 <script setup>
+import { mdiCog } from "@quasar/extras/mdi-v7";
 import { startCase } from "lodash-es";
 import { Screen, uid } from "quasar";
 import { computed, ref } from "vue";

@@ -24,11 +24,11 @@
 
                         <div>
                             @if ($member['name'] === 'Mike Casto')
-                                <img src="{{ asset('/storage/images/mike-working.jpg') }}" alt="{{ $member['name'] }}"
-                                    class="team-member-image" />
+                                <img src="{{ asset('/storage/images/mike-working.jpeg') }}" alt="{{ $member['name'] }}"
+                                    width="600" height="900" class="team-member-image" />
                             @elseif($member['name'] === 'Margaret Westlake')
-                                <img src="{{ asset('/storage/images/meg-working.jpg') }}" alt="{{ $member['name'] }}"
-                                    class="team-member-image" />
+                                <img src="{{ asset('/storage/images/meg-working.jpeg') }}" alt="{{ $member['name'] }}"
+                                    width="663" height="900" loading="lazy" class="team-member-image" />
                             @endif
                         </div>
                     </div>
@@ -58,7 +58,8 @@
 
                     <div class="accent-divider" style="background-color: {{ $colors['accent'] }}"></div>
 
-                    <img src="{{ asset('/storage/images/together.jpeg') }}" alt="Together" class="together-image" />
+                    <img src="{{ asset('/storage/images/together.jpeg') }}" alt="Together" width="1200" height="800"
+                        loading="lazy" class="together-image" />
                 </div>
 
                 {{-- Right side - Content --}}

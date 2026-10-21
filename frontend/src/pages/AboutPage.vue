@@ -1,13 +1,19 @@
 <template>
   <div class="bg-grey-1">
-    <div v-html="store.aboutUs"></div>
+    <div v-if="store.aboutUs" v-html="store.aboutUs" @click="onLinkClick"></div>
+    <div v-else class="flex flex-center q-pa-xl">
+      <q-spinner size="3em" color="secondary"></q-spinner>
+    </div>
   </div>
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import { useStore } from "src/stores/store";
+import internalLinks from "src/assets/internal-links";
 
 const store = useStore();
+const onLinkClick = internalLinks(useRouter());
 </script>
 
 <style>
@@ -35,12 +41,16 @@ const store = useStore();
 
 .team-member-image {
   height: 300px;
+  width: auto;
+  max-width: 100%;
   object-fit: contain;
   margin-top: 8px;
 }
 
 .together-image {
   height: 200px;
+  width: auto;
+  max-width: 100%;
   object-fit: contain;
   margin-top: 8px;
 }

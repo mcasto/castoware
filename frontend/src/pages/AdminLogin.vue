@@ -31,7 +31,7 @@
               <q-btn
                 round
                 flat
-                :icon="showPass ? 'mdi-eye-off' : 'mdi-eye'"
+                :icon="showPass ? mdiEyeOff : mdiEye"
                 @click="showPass = !showPass"
               ></q-btn>
             </template>
@@ -47,6 +47,7 @@
 </template>
 
 <script setup>
+import { mdiEye, mdiEyeOff } from "@quasar/extras/mdi-v7";
 import { Loading, Notify } from "quasar";
 import callApi from "src/assets/call-api";
 import { useStore } from "src/stores/store";

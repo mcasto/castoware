@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div v-if="!store.portfolio" class="flex flex-center q-pa-xl">
+      <q-spinner size="3em" color="secondary"></q-spinner>
+    </div>
     <div class="row">
       <div
         class="col-12 col-md-6"
